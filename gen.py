@@ -12,8 +12,8 @@ xDim=7
 yDim=10
 CROSS_RATE = .9
 MUT_RATE = .05
-GENERATIONS = 20
-POP_SIZE = 10
+GENERATIONS = 30
+POP_SIZE = 30
 
 def init_pop(size=POP_SIZE):
 	pop = []
@@ -65,15 +65,11 @@ def get_new_pop(pop):
 	return new_pop,np.mean(scores)
 
 
-inlayer=2
-hidlayer=3
-outlayer=3
-gene_size=inlayer*hidlayer+hidlayer*outlayer
-# scores=[[0]*POP_SIZE]*GENERATIONS
-# print(scores)
+global inlayer=2
+global hidlayer=3
+global outlayer=3
+global gene_size=inlayer*hidlayer+hidlayer*outlayer
 
-nets=[Net(),Net(),Net()]
-# scores=play(headless=False,nets=nets,verbose=False)
 avg_scores=[]
 pop = init_pop()
 print(pop)
@@ -86,7 +82,8 @@ for i in range(GENERATIONS):
 
 for p in pop:
 	print(p)
-# play(False, pop[0])
+
+play(headless=False,nets=pop,verbose=False)
 # print(pop[0])
 with open("file.txt", 'w') as output:
     for p in pop:
@@ -95,3 +92,4 @@ plt.plot(avg_scores)
 print(avg_scores)
 plt.show()
 print(pop[0])
+good=[17.0, 33.12903225806452, 37.58064516129032, 19.161290322580644, 26.483870967741936, 40.83870967741935, 61.354838709677416, 61.12903225806452, 83.87096774193549, 79.0, 85.96774193548387, 82.0, 79.0, 82.0, 86.93548387096774, 85.3225806451613, 82.38709677419355, 68.70967741935483, 71.25806451612904, 84.6774193548387, 84.6774193548387, 84.6774193548387, 85.3225806451613, 87.90322580645162, 88.48387096774194, 79.90322580645162, 85.96774193548387, 80.83870967741936, 83.16129032258064, 77.64516129032258]

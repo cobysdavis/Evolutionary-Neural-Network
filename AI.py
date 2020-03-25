@@ -4,11 +4,10 @@ import math
 import numpy as np
 import random
 import pygame
-inlayer=2
-hidlayer=3
-outlayer=3
-# random.seed(1000)
-gene_size=inlayer*hidlayer+hidlayer*outlayer
+# inlayer=2
+# hidlayer=3
+# outlayer=3
+# gene_size=inlayer*hidlayer+hidlayer*outlayer
 
 class Net():
     def __init__(self, w1=None, w2=None):
