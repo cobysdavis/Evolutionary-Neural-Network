@@ -4,10 +4,10 @@ import math
 import numpy as np
 import random
 import pygame
-# inlayer=2
-# hidlayer=3
-# outlayer=3
-# gene_size=inlayer*hidlayer+hidlayer*outlayer
+inlayer=2
+hidlayer=3
+outlayer=3
+gene_size=inlayer*hidlayer+hidlayer*outlayer
 
 class Net():
     def __init__(self, w1=None, w2=None):
@@ -25,7 +25,7 @@ class Net():
     def random(self):
         base=[]
         for i in range(gene_size):
-            base.append(2*(random.random()-0.5))
+            base.append(10*(random.random()-0.5))
         self.decode(base)
     def encode(self):
         gene = []

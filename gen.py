@@ -1,4 +1,5 @@
 from game import play
+import AI
 from AI import Net
 from bug import Bug
 import numpy as np
@@ -52,44 +53,50 @@ def select(pop,scores):
 
 def get_new_pop(pop):
 	new_pop = []
-	scores=play(headless=False,nets=pop,verbose=False)
+	scores=play(headless=headless,nets=pop,verbose=False)
 	#sort the population and scores
-	pop = [x for _, x in sorted(zip(scores,pop), key=lambda pair: pair[0])]
-	scores=[x for _, x in sorted(zip(scores,scores), key=lambda pair: pair[0])]
-	new_pop.extend(pop[0:5])
+	pop = [x for _, x in sorted(zip(scores,pop), key=lambda pair: pair[0],reverse = True)]
+	scores=[x for _, x in sorted(zip(scores,scores), key=lambda pair: pair[0],reverse = True)]
+	new_pop.extend(pop[0:int(POP_SIZE/4)])
 	while len(new_pop) < len(pop):
 		first = select(pop,scores)
 		second = select(pop,scores)
 		first, second = breed(first, second)
 		new_pop.extend([first, second])
-	return new_pop,np.mean(scores)
+	return new_pop,scores
 
 
-global inlayer=2
-global hidlayer=3
-global outlayer=3
-global gene_size=inlayer*hidlayer+hidlayer*outlayer
+# AI.hidlayer=10
+# AI.outlayer=3
+# # gene_size=AI.inlayer*AI.hidlayer+hidlayer*AI.outlayer
 
-avg_scores=[]
-pop = init_pop()
-print(pop)
-for i in range(GENERATIONS):
-	print('===========================')
-	print('GENERATION ' + str(i))
-	pop,avg = get_new_pop(pop)
-	print('AVG Score: ' + str(avg))
-	avg_scores.append(avg)
+headless=True
+def start():
+	avg_scores=[]
+	pop = init_pop()
+	for i in range(GENERATIONS):
+		print('===========================')
+		print('GENERATION ' + str(i))
+		pop,scores = get_new_pop(pop)
+		print('Scores: ' + str(scores))
+		avg_scores.append(np.mean(scores))
 
-for p in pop:
-	print(p)
+	for p in pop:
+		print(p)
 
-play(headless=False,nets=pop,verbose=False)
-# print(pop[0])
-with open("file.txt", 'w') as output:
-    for p in pop:
-        output.write(str(p) + '\n')
-plt.plot(avg_scores)
-print(avg_scores)
-plt.show()
-print(pop[0])
-good=[17.0, 33.12903225806452, 37.58064516129032, 19.161290322580644, 26.483870967741936, 40.83870967741935, 61.354838709677416, 61.12903225806452, 83.87096774193549, 79.0, 85.96774193548387, 82.0, 79.0, 82.0, 86.93548387096774, 85.3225806451613, 82.38709677419355, 68.70967741935483, 71.25806451612904, 84.6774193548387, 84.6774193548387, 84.6774193548387, 85.3225806451613, 87.90322580645162, 88.48387096774194, 79.90322580645162, 85.96774193548387, 80.83870967741936, 83.16129032258064, 77.64516129032258]
+	play(headless=False,nets=pop,verbose=False)
+	# print(pop[0])
+	with open("file.txt", 'w') as output:
+	    for p in pop:
+	        output.write(str(p) + '\n')
+	plt.plot(avg_scores)
+	print(avg_scores)
+	plt.show()
+	print(pop[0])
+
+start()
+
+# good=[17.0, 33.12903225806452, 37.58064516129032, 19.161290322580644, 26.483870967741936, 40.83870967741935, 61.354838709677416, 61.12903225806452, 83.87096774193549, 79.0, 85.96774193548387, 82.0, 79.0, 82.0, 86.93548387096774, 85.3225806451613, 82.38709677419355, 68.70967741935483, 71.25806451612904, 84.6774193548387, 84.6774193548387, 84.6774193548387, 85.3225806451613, 87.90322580645162, 88.48387096774194, 79.90322580645162, 85.96774193548387, 80.83870967741936, 83.16129032258064, 77.64516129032258]
+# n=Net()
+# n.decode(good)
+# play(headless=False,nets=[n],verbose=False)

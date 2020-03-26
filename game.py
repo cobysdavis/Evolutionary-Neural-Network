@@ -132,7 +132,7 @@ def play(headless=False,nets=None,verbose=False):
                     b.score += 1
 
         for b in bugs:
-            if b.score>=100:
+            if b.score>=300:
                 scores=getBugsScores(bugs)
                 pygame.quit()
                 return scores
